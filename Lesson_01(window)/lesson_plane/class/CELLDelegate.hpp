@@ -152,18 +152,36 @@ namespace   CELL
     };
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //////////////////////////////////////////////////////////////////////////
     //! 2 argument
     //////////////////////////////////////////////////////////////////////////
+	/*依然是代理模式  IDelegate2是虚基类接口     IDelegate2Imp 是接口实现     Delegate2是几个参数对应不同的类*/
     template<typename R,typename A1,typename A2>
-    class IDelegate2
+    class IDelegate2  
     {
     public:
         virtual R   invoke(A1, A2) =   0;
     };
     
+
+	/*接口实现*/
     template<typename T,typename R,typename A1,typename A2>
-    class IDelegate2Imp :public IDelegate2<R,A1,A2>
+    class IDelegate2Imp :public IDelegate2<R,A1,A2>     
     {
     public:
         typedef R   (T::*Method)(A1,A2);
@@ -182,13 +200,15 @@ namespace   CELL
         Method  _method;
     };
 
+
+
     /**
-    *   使用该类完成对象的声明使用
+    *   使用该类完成对象的声明使用  名字很容易混淆  前面I字母是接口   imp是实现
     */
     template<typename R,typename A1,typename A2>
     class Delegate2
     {
-        typedef IDelegate2<R,A1,A2>     TIDelegate2;
+        typedef IDelegate2<R,A1,A2>     TIDelegate2;  
     public:
         Delegate2()
         {
@@ -253,6 +273,19 @@ namespace   CELL
         TIDelegate2*_delegate;
         char        _realObject[32];
     };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     //////////////////////////////////////////////////////////////////////////
