@@ -13,7 +13,7 @@ namespace   CELL
             FLAG_VISIBLE    =   1<<1,
         };
     public:
-        CELL::quatr         _quat;  // 四元素
+        CELL::quatr         _quat;  // 用四元素表示旋转比矩阵快， 最后四元素可以还原为矩阵
         CELL::float3        _scale;
         CELL::float3        _pos;
         CELL::float2        _size;
