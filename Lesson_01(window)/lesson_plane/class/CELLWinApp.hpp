@@ -66,7 +66,7 @@ namespace   CELL
         */
         bool    initOpenGLES20()
         {
-            const EGLint attribs[] =
+            const EGLint attribs[] =                    //初始化属性
             {
                 EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
                 EGL_BLUE_SIZE, 8,
@@ -81,23 +81,23 @@ namespace   CELL
             EGLint  minor;
 
             //! 1
-            _display	    =	eglGetDisplay(EGL_DEFAULT_DISPLAY);
+            _display	    =	eglGetDisplay(EGL_DEFAULT_DISPLAY);  //跨平台 
 
             //! 2init
-            eglInitialize(_display, &major, &minor);
+            eglInitialize(_display, &major, &minor);     //获得 ES 的大版本号 和小版本号
 
             //! 3
-            eglChooseConfig(_display, attribs, &_config, 1, &numConfigs);
+            eglChooseConfig(_display, attribs, &_config, 1, &numConfigs); //通过配置去初始化display
 
-            eglGetConfigAttrib(_display, _config, EGL_NATIVE_VISUAL_ID, &format);
+            eglGetConfigAttrib(_display, _config, EGL_NATIVE_VISUAL_ID, &format);   
             //! 4 
-            _surface	    = 	eglCreateWindowSurface(_display, _config, _hWnd, NULL);
+            _surface	    = 	eglCreateWindowSurface(_display, _config, _hWnd, NULL);  //通过display 和 config获得窗口
 
             //! 5
             EGLint attr[]   =   { EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE, EGL_NONE };
-            _context 	    = 	eglCreateContext(_display, _config, 0, attr);
+            _context 	    = 	eglCreateContext(_display, _config, 0, attr);   //创建上下文  相当于ES的状态机  程序的主要工作就是向Context提供图元、设置状态，偶尔也从Context里获取一些信息
             //! 6
-            if (eglMakeCurrent(_display, _surface, _surface, _context) == EGL_FALSE)
+            if (eglMakeCurrent(_display, _surface, _surface, _context) == EGL_FALSE) //使用当前的状态机  因为 状态机可以有多个
             {
                 return false;
             }
@@ -139,7 +139,7 @@ namespace   CELL
             {
                 return  pThis->onEvent(hWnd,msg,wParam,lParam);
             }
-            if (WM_CREATE == msg)
+            if (WM_CREATE == msg)   //窗口创建之后显示之前 系统分发的事件
             {
                 CREATESTRUCT*   pCreate =   (CREATESTRUCT*)lParam;
                 SetWindowLong(hWnd,GWL_USERDATA,(DWORD_PTR)pCreate->lpCreateParams);
@@ -294,11 +294,11 @@ namespace   CELL
                 return  false;
             }
             //! 增加资源初始化
-            _instance._resource.initialize(_instance._device);
-            _frame  =   createFrame(_instance);
+            _instance._resource.initialize(_instance._device);   //初始化资源
+            _frame  =   createFrame(_instance);                  //初始化框架
 
             MSG msg =   {0};
-            while(msg.message != WM_QUIT)
+            while(msg.message != WM_QUIT)   //搞清楚PeekMessage 和 GetMessage函数的区别 PeekMessage是没有消息直接返回   GetMessage是没有消息就一直等待 阻塞
             {
                 if (msg.message == WM_DESTROY || 
                     msg.message == WM_CLOSE)
@@ -313,10 +313,10 @@ namespace   CELL
                 /**
                 *   有消息，处理消息，无消息，则进行渲染绘制
                 */
-                if( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) )
+                if( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) ) //最后一个参数表示 获得消息后就直接删除 如果是 PM_NOREMOVE 则只获得消息，消息一直保存消息列表里面
                 { 
-                    TranslateMessage( &msg );
-                    DispatchMessage( &msg );
+                    TranslateMessage( &msg );  //将系统发的消息 翻译成我们能认识的消息，差不多就是这个意思
+                    DispatchMessage( &msg );   //当我们创建WNDCLASSEX（可以理解为一个结构体数据）的时候，注册了一个监听函数wndProc 他会调用onEvent，当执行分发的时候，wndProc会收到消息
                 }
                
                 if (_frame)

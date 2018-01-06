@@ -378,7 +378,7 @@ namespace   CELL
     }
 
 
-    void CELLOpenGL::setUniform1f( int index,float v0 )
+    void CELLOpenGL::setUniform1f( int index,float v0 )  //这里的index 都是从shader代码里面获得 变量句柄
     {
         glUniform1f(index, v0);
     }
@@ -418,7 +418,7 @@ namespace   CELL
         glUniform4i(index, v0,v1,v2,v3);
     }
 
-    void CELLOpenGL::setUniform1fv( int index,int count, const float *value )
+    void CELLOpenGL::setUniform1fv( int index,int count, const float *value ) //设置数组
     {
         glUniform1fv(index, count, value);
     }
@@ -458,7 +458,7 @@ namespace   CELL
         glUniform4iv(index, count, value);
     }
 
-    void CELLOpenGL::setUniformMatrix2fv( int index,int count, bool transpose, const float *value )
+    void CELLOpenGL::setUniformMatrix2fv( int index,int count, bool transpose, const float *value )//第三个参数是指 是否转置矩阵 opengles矩阵行列需要倒置
     {
         glUniformMatrix2fv(index, count, (GLboolean) transpose, value);
     }
@@ -473,6 +473,14 @@ namespace   CELL
         glUniformMatrix4fv(index, count, (GLboolean) transpose, value);
     }
 
+	/*
+		index    从shader代码获得变量句柄
+		size     单个顶点  颜色 之类的 数组大小（或者 struct）
+		type     数组（或者 struct）里面变量的类型
+		normalized   非浮点数转化为浮点数是否需要归一化
+		stride  数组跳跃的长度
+		pointer 顶点或者颜色的大小
+	*/
     void CELLOpenGL::attributePointer( int index, int size, int type, int normalized, int stride, const void* pointer )
     {
         glVertexAttribPointer(index,size,type,(GLboolean)normalized,stride,pointer);
@@ -488,12 +496,24 @@ namespace   CELL
         glDisableVertexAttribArray(attrIndex);
     }
 
+	//绘制图元函数  还有一个  glDrawElements 是  VIO使用的  即利用index
     void CELLOpenGL::drawArray( unsigned mode,int first,int count )
     {
         glDrawArrays(mode,first,count);
     }
 
-    
+    /*
+	应该有纹理类型  但是是2d游戏 所以没传 
+	level   纹理等级  最高 33吧   也和 纹理mip有关
+	intFmt  存储的纹理格式
+	width 纹理宽
+	height 纹理高  都必须是2的幂
+	border 纹理边界  
+	scrFmt OPENGL 像素格式
+	type 像素数据的数据类型
+	data  数据
+	userData 额外的数据
+	*/
     Texture2dId CELLOpenGL::createTexure2D(
         int level,
         int intFmt,
@@ -538,9 +558,9 @@ namespace   CELL
             return  texId;
         }
 
-        glGenTextures(1, &texId._texture);
-        glBindTexture(GL_TEXTURE_2D, texId._texture);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glGenTextures(1, &texId._texture);   //创建纹理    第一个参数是个数
+        glBindTexture(GL_TEXTURE_2D, texId._texture);  //绑定纹理 
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);   //纹理滤波
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
 
@@ -610,6 +630,7 @@ namespace   CELL
         glEnable(state);
     }
 
+	//混合
     void CELLOpenGL::blendFunction( unsigned sfactor, unsigned dfactor )
     {
         glBlendFunc(sfactor,dfactor);

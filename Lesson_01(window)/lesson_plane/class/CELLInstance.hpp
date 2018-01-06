@@ -13,7 +13,7 @@ namespace   CELL
     class   CELLInstance
     {
     public:
-        CELLOpenGL      _device;
+        CELLOpenGL      _device;      //创建了三个主要的对象
         CELLResource    _resource;
         CELLTimerMgr    _timerMgr;
     };

@@ -5,7 +5,7 @@ namespace   CELL
     /**
     *   float2 + rgba
     */
-    class   PROGRAM_P2_C4 :public Program
+    class   PROGRAM_P2_C4 :public Program   //顶点2个属性   颜色4个属性
     {
     public:
         atrribute   _position;

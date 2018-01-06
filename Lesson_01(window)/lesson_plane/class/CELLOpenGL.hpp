@@ -9,7 +9,7 @@ namespace   CELL
     /**
     *   时间
     */
-    class   FrameEvent
+    class   FrameEvent    //给定时器使用的
     {
     public:
         /**
@@ -21,6 +21,12 @@ namespace   CELL
         */
         float    _sinceLastEvent;
     };
+	/*
+		将shade处理分为了3个部分  
+			1、  ShaderId 是指shader代码传给ES 编译之后的返回值
+			2、  ProgramId 是指 创建一个着色器 然后 Attach 顶点shader和 片源shader
+			3、  Program 代码里面真正使用的着色器的逻辑操作，将shader代码API化，方便后续代码使用
+	*/
 
 	/*
 		关联vsh 和 psh后生成的 GLSL语言 ID
