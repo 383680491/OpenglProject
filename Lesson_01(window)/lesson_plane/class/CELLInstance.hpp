@@ -16,5 +16,8 @@ namespace   CELL
         CELLOpenGL      _device;      //创建了三个主要的对象
         CELLResource    _resource;
         CELLTimerMgr    _timerMgr;
+		int screenWidth;
+		int screenHeight;
+
     };
 }

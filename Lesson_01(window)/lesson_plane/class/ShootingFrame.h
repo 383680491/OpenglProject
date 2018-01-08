@@ -2,6 +2,7 @@
 #include "class/CELLFrame.hpp"
 #include "class/CELLNode.hpp"
 #include "class/CELLPlayer.hpp"
+#include "class/CELLLittleMap.hpp"
 
 namespace   CELL
 {
@@ -16,6 +17,7 @@ namespace   CELL
     public:
         Texture2dId     _texture;
         CELLPlayer      _player;
+		CELLLittleMap*   map;
     public:
         ShootingFrame(CELLInstance& instance)
             :CELLFrame(instance)
@@ -25,7 +27,16 @@ namespace   CELL
             
             instance._device.enableState(GL_BLEND);
             instance._device.blendFunction(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+			map = new CELLLittleMap(instance);
         }
+
+		~ShootingFrame()
+		{
+			if (map){
+				delete map;
+			}
+		}
 
         /**
         *   Êó±êÒÆ¶¯
@@ -118,6 +129,8 @@ namespace   CELL
                 _player.onRneder(evt,screenProj);
             }
             prg.end();
+
+			//map->onRneder(evt);
         }
 
 

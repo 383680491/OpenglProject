@@ -294,6 +294,8 @@ namespace   CELL
                 return  false;
             }
             //! 增加资源初始化
+			_instance.screenWidth = width;
+			_instance.screenHeight = height;
             _instance._resource.initialize(_instance._device);   //初始化资源
             _frame  =   createFrame(_instance);                  //初始化框架
 
