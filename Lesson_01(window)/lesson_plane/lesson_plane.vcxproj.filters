@@ -82,5 +82,8 @@
     <ClInclude Include="class\ShootingFrame.h">
       <Filter>class</Filter>
     </ClInclude>
+    <ClInclude Include="class\CELLLittleMap.hpp">
+      <Filter>class</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

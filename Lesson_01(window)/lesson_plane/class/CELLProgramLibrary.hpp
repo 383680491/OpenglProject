@@ -1,4 +1,5 @@
 #pragma once
+#include "CELLOpenGL.hpp"
 
 namespace   CELL
 {
@@ -207,5 +208,103 @@ namespace   CELL
             _device->useProgram(0);
         }
     };
+
+	class PROGRAME_P2_UV_C4 : public Program{
+	public:
+		atrribute _position;
+		atrribute _uv;
+		atrribute _color;
+		uniform _MVP;
+		uniform _texture;
+	public:
+		PROGRAME_P2_UV_C4()
+		{
+			_position = -1;
+			_color = -1;
+			_MVP = -1;
+			_uv = -1;
+			_texture = -1;
+		}
+
+		void initialize(CELLOpenGL* device)
+		{
+			_device = device;
+
+			const char* vs = {
+				"precision lowp float; "
+				"uniform mat4 _MVP;"
+				"attribute vec2 _position;"
+				"attribute vec4 _color;"
+				"attribute vec2 _uv;"
+				"varying vec2 _outUV;"
+				"varying vec4 _outColor;"
+
+				"void main()"
+				"{"
+				"	vec4 pos = vec4(_position, 0, 1);"
+				"	_outUV = _uv;"
+				"	_outColor = _color;"
+				"	gl_Position = _MVP * pos;"
+				"}"
+			};
+
+			const char* ps = {
+				"precision lowp float;"
+				"uniform sampler2D _texture;"
+				"varying vec2 _outUV;"
+				"varying vec4 _outColor;"
+
+				"void main()"
+				"{"
+				"	vec4 color = texture2D(_texture, _outUV);"
+				"	color += _outColor;"
+				"	gl_FragColor = color;"
+				"}"
+
+			};
+			ProgramId& programId = *this;
+			programId = _device->createProgram(vs, ps);
+			_position = _device->getAttribLocation(programId, "_position");
+			_color = _device->getAttribLocation(programId, "_color");
+			_uv = _device->getAttribLocation(programId, "_uv");
+			_texture = _device->getUniformLocation(programId, "_texture");
+			_MVP = _device->getUniformLocation(programId, "_MVP");
+		}
+
+		void begin()
+		{
+			_device->useProgram(this);
+
+			if (_position != -1){
+				_device->enableVertexAttributeArray(_position);
+			}
+
+			if (_color != -1){
+				_device->enableVertexAttributeArray(_color);
+			}
+
+			if (_uv != -1){
+				_device->enableVertexAttributeArray(_uv);
+			}
+		}
+
+		void end()
+		{
+			if (_position != -1){
+				_device->disableVertexAttributeArray(_position);
+			}
+
+			if (_color != -1){
+				_device->disableVertexAttributeArray(_color);
+			}
+
+			if (_uv != -1){
+				_device->disableVertexAttributeArray(_uv);
+			}
+
+			_device->useProgram(0);
+		}
+
+	};
 
 }

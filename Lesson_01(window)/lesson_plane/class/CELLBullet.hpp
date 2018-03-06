@@ -1,6 +1,6 @@
 #pragma once
 
-#include "class/CELLNode.hpp"
+#include "CELLNode.hpp"
 
 namespace   CELL
 {

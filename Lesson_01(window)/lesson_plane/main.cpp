@@ -29,7 +29,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 
     ShootingApp  app(hInstance);
-    app.main(400,700);
+    app.main(320,640);
 
     return 0;
 }

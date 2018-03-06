@@ -1,9 +1,9 @@
 #pragma once
 
-#include    "class/CELLNode.hpp"
-#include    "class/CELLInput.hpp"
-#include    "class/CELLTimer.hpp"
-#include    "class/CELLBullet.hpp"
+#include    "CELLNode.hpp"
+#include    "CELLInput.hpp"
+#include    "CELLTimer.hpp"
+#include    "CELLBullet.hpp"
 
 namespace   CELL
 {

@@ -1,8 +1,8 @@
 #pragma once
-#include "class/CELLFrame.hpp"
-#include "class/CELLNode.hpp"
-#include "class/CELLPlayer.hpp"
-#include "class/CELLLittleMap.hpp"
+#include "CELLFrame.hpp"
+#include "CELLNode.hpp"
+#include "CELLPlayer.hpp"
+#include "CELLLittleMap.hpp"
 
 namespace   CELL
 {
@@ -24,6 +24,8 @@ namespace   CELL
             ,_player(instance)
         {
             _texture    =   instance._resource.getTexture("data/image/main.tex");
+
+
             
             instance._device.enableState(GL_BLEND);
             instance._device.blendFunction(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -130,7 +132,7 @@ namespace   CELL
             }
             prg.end();
 
-			//map->onRneder(evt);
+			map->onRneder(evt);
         }
 
 

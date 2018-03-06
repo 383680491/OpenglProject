@@ -1,7 +1,7 @@
 #pragma once
 
-#include    "class/CELLOpenGL.hpp"
-#include    "class/CELLProgramLibrary.hpp"
+#include    "CELLOpenGL.hpp"
+#include    "CELLProgramLibrary.hpp"
 #include    <string>
 #include    <map>
 
@@ -16,6 +16,7 @@ namespace   CELL
         CELLOpenGL*         _device;
         PROGRAM_P2_C4       _PROGRAM_P2_C4;
         PROGRAM_P2_UV2      _PROGRAM_P2_UV2;
+		PROGRAME_P2_UV_C4   _PROGRAME_P2_UV_C4;
         TextureMap          _textureMap;
     public:
 
@@ -28,6 +29,7 @@ namespace   CELL
             _device =   &device;
             _PROGRAM_P2_C4.initialize(_device);
             _PROGRAM_P2_UV2.initialize(_device);
+			_PROGRAME_P2_UV_C4.initialize(_device);
         }
 
         Texture2dId getTexture(const char* texture)

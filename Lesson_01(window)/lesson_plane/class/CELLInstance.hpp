@@ -1,8 +1,8 @@
 #pragma once
 
-#include "class/CELLOpenGL.hpp"
-#include "class/CELLResource.hpp"
-#include "class/CELLTimerMgr.hpp"
+#include "CELLOpenGL.hpp"
+#include "CELLResource.hpp"
+#include "CELLTimerMgr.hpp"
 
 
 namespace   CELL
